@@ -11,6 +11,7 @@ from wiktionaryparser import WiktionaryParser
 
 
 
+
 def ankiconn(vokab, translation, definition):
     import json
     import urllib.request

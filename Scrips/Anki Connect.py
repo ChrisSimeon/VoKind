@@ -1,6 +1,9 @@
 import json
 import urllib.request
 import unicodedata
+from Datenbankpfad import pfadDatenbank
+
+
 
 # Fehler mit dem Encoding{'result': None, 'error': "'ascii' codec can't encode character '\\xf6' in position 16: ordinal not in range(128)"}
 # Ich hab jetzt die alten Vokabln aus vokabs_all datenbank mit in die neue Datenbank mitaufgenommen, die Dinger sind aber seltsam encoded
@@ -16,8 +19,7 @@ def Datenbankabfrage_Anki():
     import sqlite3
     import time
 
-    Datenbankpfad = "/Users/chris/Documents/OneDrive/Christian/Sprachen/ProgrammVokabeln/Datenbank/Vokabldatebank.sqlite3"
-    conn = sqlite3.connect(Datenbankpfad)
+    conn = sqlite3.connect(pfadDatenbank())
     c = conn.cursor()
     c.execute("Select Translation.Translation, Definition.Infinitiv, Definition.Origin, Definition.Definitions, Incoming.usage, Incoming.book, Definition.Expressions, Incoming.wordcount, Definition.LinguisticDef, Definition.LarousseLink, Definition.Diffucultes, Definition.LinkPronounciation FROM Definition JOIN Incoming ON Incoming.words = Definition.words JOIN Translation  ON Translation.words = Definition.words Where Definition.LinkPronounciation is NULL")
     ab = c.fetchall()
@@ -154,7 +156,7 @@ def Datenbankabfrage_Anki():
         print(response['result'])
         time.sleep(10)
         
-    c.close()
+    conn.close()
     return
 
 

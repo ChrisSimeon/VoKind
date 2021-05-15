@@ -1,7 +1,6 @@
 ##Imorts
 import sqlite3
 import sys
-import Kindle_Functions as KF
 import Abfrage_Larousse as AL
 import Abfrage_Leo as ALe
 import time
@@ -10,12 +9,12 @@ from Datenbankpfad import pfadDatenbank
 
 
 ##Variables
-Datenbankpfad = pfadDatenbank() + "/Vokabldatebank.sqlite3"
+Datenbankpfad = pfadDatenbank()
 
 
 def get_Vokabeln():
     Vokabeln = KF.Kindle_Import()
-    conn =sqlite3.connect(Datenbankpfad)
+    conn =sqlite3.connect(pfadDatenbank())
     c = conn.cursor()
     for Vokabel in Vokabeln:
         c.execute("Select words from Incoming where words = :vokabel",{"vokabel": Vokabel["word"]})
